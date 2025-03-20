@@ -16,5 +16,7 @@ in aceasta varianta putem ajunge la urmatoarea problema: Daca se adauga in fiesi
 In codul meu, actiunile(mouse/keyboard) se inregistreaza pe rand(daca nu sunt apasate taste atunci poate este mouse-ul mutat)
 am mai avea varianta in care pentru a ne asgura ca totul este capturat, sa folosim multi-threading si sa inregistram actiunile maouse-ului separat de cele ale keyboard-ului
 
+
+
 Folosind sneakysnek recorder am putut inregistra doar actiuni simple iar pentru a captura si reproduce actiunile precum
  anumite combinatii de taste sau traversarea de pe o pagina pe alta
