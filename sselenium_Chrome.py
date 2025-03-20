@@ -1,15 +1,22 @@
 import csv
-
+import threading
 import keyboard
 import pyautogui, sys
+from keyboard import KeyboardEvent
 from selenium import webdriver
 import time
 from pathlib import Path
 from sneakysnek.recorder import Recorder
 from sneakysnek import keyboard_event
+from pynput import mouse, keyboard
+import mouse
+import keyboard
 
-from selenium.webdriver.common.keys import Keys
+from record_key import keyboard_events
 
+mouse_events = []
+mouse.hook(mouse_events.append)
+#mouse.unhook(mouse_events.append)
 driver = webdriver.Chrome()
 
 with open("./new_file.csv", 'w', newline='') as file:
@@ -18,7 +25,7 @@ with open("./new_file.csv", 'w', newline='') as file:
     writer.writeheader()
 
 def write_in_file (output):
-    if type(output.event) is keyboard_event.KeyboardEvents:
+    if isinstance(output, KeyboardEvent):
         with open("./new_file.csv", 'a', newline='') as file:
             writer = csv.DictWriter(file, fieldnames=fieldnames)
             writer.writerow({
@@ -36,30 +43,22 @@ def write_in_file (output):
             })
 
 driver.get("https://www.python.org")
+
+'''k_thread = threading.Thread(target = lambda :keyboard.play(keyboard_events))
+k_thread.start()
+
+m_thread = threading.Thread(target = lambda :mouse.play(mouse_events))
+m_thread.start()'''
+
 recorder = Recorder.record(write_in_file)
+time.sleep(60)
 
-
-print('Press Ctrl-C to quit.')
-try:
-    while True:
-        x, y = pyautogui.position()
-        positionStr = 'X: ' + str(x).rjust(4) + ' Y: ' + str(y).rjust(4)
-        print(positionStr, end='')
-        print('\b' * len(positionStr), end='', flush=True)
-except KeyboardInterrupt:
-    print('\n')
-    #sys.exit(0)
-
-"""try:
-    while True:
-        if keyboard.is_pressed('q'):  # Exit on 'q' key press
-            print("\nExiting...")
-            break
-    time.sleep(60)
-except KeyboardInterrupt:
-    print('\n')
-    #sys.exit(0)
-"""
+'''k_thread.join() 
+m_thread.join()'''
 
 
 recorder.stop()
+
+
+
+

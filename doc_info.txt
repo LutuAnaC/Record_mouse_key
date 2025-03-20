@@ -1,0 +1,20 @@
+
+Prima parte a proiectului a fost realizata folosind selenium and sneakysnek recorder
+pentru a salva log-urile in fisierul csv am creat o functie care scrie in fisier "write_in_file"
+Aceasta functie este apelata de "recorder = Recorder.record(write_in_file)"
+pentru a ma asgura ca in fisier capetle de tabel sunt doar o singura data afisate am separat de functia "write_in_file"
+urmatoarea functionalitate:
+"with open("./new_file.csv", 'w', newline='') as file:
+    fieldnames = ["event", "timestamp","mouse_x", "mouse_y"]
+    writer = csv.DictWriter(file, fieldnames=fieldnames)
+    writer.writeheader()"
+
+In varianta initiala am folosit 'w' si in functia "write_in_file" dar am inlocuit cu append 'a' pentru a nu rescrie fisierului la fiecare apelare.
+in aceasta varianta putem ajunge la urmatoarea problema: Daca se adauga in fiesier folosind append, se poate ingreuna/bloca in cazul in care cvs-ul ajunge la dimensiuni prea mari
+.pentru asta am putea pune o conditie sa fie fisierul re-writed periodic sau sa revenim la varianta initiala.
+
+In codul meu, actiunile(mouse/keyboard) se inregistreaza pe rand(daca nu sunt apasate taste atunci poate este mouse-ul mutat)
+am mai avea varianta in care pentru a ne asgura ca totul este capturat, sa folosim multi-threading si sa inregistram actiunile maouse-ului separat de cele ale keyboard-ului
+
+Folosind sneakysnek recorder am putut inregistra doar actiuni simple iar pentru a captura si reproduce actiunile precum
+ anumite combinatii de taste sau traversarea de pe o pagina pe alta
